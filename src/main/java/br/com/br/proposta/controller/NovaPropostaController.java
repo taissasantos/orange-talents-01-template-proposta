@@ -31,6 +31,7 @@ public class NovaPropostaController {
 	@Autowired
 	PropostaService service;
 
+	//@RolesAllowed("user")
 	@PostMapping(value ="/api/proposta")
 	public ResponseEntity<?>novaProposta(@RequestBody @Valid NovaPropostaRequest request, 
 			UriComponentsBuilder uri){
