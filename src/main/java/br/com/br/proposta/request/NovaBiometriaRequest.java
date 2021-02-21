@@ -2,6 +2,7 @@ package br.com.br.proposta.request;
 
 import javax.validation.constraints.NotEmpty;
 
+
 import br.com.br.proposta.model.Biometria;
 import br.com.br.proposta.validator.Base64;
 

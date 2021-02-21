@@ -52,6 +52,8 @@ public class BiometriaController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Biometria inválida");
 		}
 		
+		
+		
 		logger.info("Salvando biometria", biometria.getBiometria());
 		manager.persist(biometria);
 		

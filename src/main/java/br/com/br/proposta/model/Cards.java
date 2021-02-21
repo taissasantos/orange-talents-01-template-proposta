@@ -2,6 +2,7 @@ package br.com.br.proposta.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,8 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
 
+import br.com.br.proposta.request.AvisoViagemRequest;
 
 @Entity
 public class Cards {
@@ -32,12 +35,17 @@ public class Cards {
 
 	@OneToMany(mappedBy = "cartao", cascade = CascadeType.PERSIST)
 	private List<Biometria> biometrias = new ArrayList<>();
+	
+	@OneToMany(cascade = CascadeType.ALL)
+    private List<AvisoViagem> viagens = new ArrayList<>();
 
 	@OneToMany(mappedBy = "cartao")
 	private List<Bloqueio> bloqueio;
 
 	@Enumerated(EnumType.STRING)
 	private StatusCartao status;
+
+	
 
 	@Deprecated
 	public Cards() {}
@@ -58,6 +66,17 @@ public class Cards {
 		this.status = StatusCartao.BLOQUEADO;
 		
 	}
+	
+	public void addNovaViagem(AvisoViagem avisoViagem) {
+        this.viagens.add(avisoViagem);
+    }
+	
+	/*
+	 * public void addNovaViagem(AvisoViagemRequest request, Map<String, String>
+	 * requestHeaders) { viagens.add(new AvisoViagem(request.destino,
+	 * request.terminoViagem, requestHeaders.get(HttpServletService.IP),
+	 * requestHeaders.get(HttpServletService.USER_AGENT), this)); }
+	 */
 
 	public Long getId() {
 		return id;
