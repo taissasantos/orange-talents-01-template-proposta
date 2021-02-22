@@ -38,13 +38,15 @@ public class Cards {
 	
 	@OneToMany(cascade = CascadeType.ALL)
     private List<AvisoViagem> viagens = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "carteira")
+    private List<Carteira> carteira = new ArrayList<>();
 
 	@OneToMany(mappedBy = "cartao")
 	private List<Bloqueio> bloqueio;
 
 	@Enumerated(EnumType.STRING)
 	private StatusCartao status;
-
 	
 
 	@Deprecated
@@ -71,12 +73,10 @@ public class Cards {
         this.viagens.add(avisoViagem);
     }
 	
-	/*
-	 * public void addNovaViagem(AvisoViagemRequest request, Map<String, String>
-	 * requestHeaders) { viagens.add(new AvisoViagem(request.destino,
-	 * request.terminoViagem, requestHeaders.get(HttpServletService.IP),
-	 * requestHeaders.get(HttpServletService.USER_AGENT), this)); }
-	 */
+	public void addNovaCarteira(Carteira carteira) {
+        this.carteira.add(carteira);
+    }
+	
 
 	public Long getId() {
 		return id;
