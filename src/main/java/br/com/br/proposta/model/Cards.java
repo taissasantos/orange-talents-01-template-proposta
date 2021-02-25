@@ -2,7 +2,6 @@ package br.com.br.proposta.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,10 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
 
-import br.com.br.proposta.request.AvisoViagemRequest;
+import br.com.br.proposta.model.enums.StatusCartao;
 
 @Entity
 public class Cards {

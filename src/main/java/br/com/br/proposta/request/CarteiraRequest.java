@@ -3,14 +3,13 @@ package br.com.br.proposta.request;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import br.com.br.proposta.model.NomeCarteiraEnum;
+import br.com.br.proposta.model.enums.NomeCarteiraEnum;
 
 public class CarteiraRequest {
 	
 	@Email
 	public String email;
-	
-	
+		
 	public NomeCarteiraEnum nomeCarteira;
 	
 	@Deprecated

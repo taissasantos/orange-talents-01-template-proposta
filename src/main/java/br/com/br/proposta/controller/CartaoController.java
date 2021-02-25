@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.br.proposta.model.Bloqueio;
 import br.com.br.proposta.model.Cards;
+import br.com.br.proposta.request.SolicitacaoBloqueio;
+import br.com.br.proposta.response.StatusCartaoResponse;
 import br.com.br.proposta.webservice.CartaoWebRest;
-import br.com.br.proposta.webservice.SolicitacaoBloqueio;
-import br.com.br.proposta.webservice.StatusCartaoResponse;
 import feign.FeignException;
 
 @RestController

@@ -3,7 +3,8 @@ package br.com.br.proposta.response;
 import java.util.Optional;
 
 import br.com.br.proposta.model.Proposta;
-import br.com.br.proposta.model.StatusAvaliacao;
+import br.com.br.proposta.model.enums.StatusAvaliacao;
+import br.com.br.proposta.security.Criptografia;
 
 public class PropostaResponse {
 
@@ -17,6 +18,7 @@ public class PropostaResponse {
 
 	public PropostaResponse(Optional<Proposta> proposta) {
 		if(proposta.isPresent()) {
+			//this.documento = Criptografia.decode(proposta.get().documento);
 			this.documento = proposta.get().documento;
 			this.nome = proposta.get().nome;
 			this.status = proposta.get().getStatus();

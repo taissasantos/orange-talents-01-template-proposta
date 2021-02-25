@@ -15,7 +15,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
-import br.com.br.proposta.webservice.DadosCardsResponse;
+import br.com.br.proposta.model.enums.StatusAvaliacao;
+import br.com.br.proposta.response.DadosCardsResponse;
+import br.com.br.proposta.security.Criptografia;
 
 
 @Entity
@@ -24,9 +26,9 @@ public class Proposta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long	id;
-
+	
 	@NotBlank
-	@Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
 	public String documento;
 
 	@NotBlank
@@ -57,8 +59,6 @@ public class Proposta {
 		this.cartao = new Cards(response.getTitular() , response.getId(),  this);
 	}
 
-	
-
 	@Deprecated
 	public Proposta() {}
 
@@ -66,7 +66,7 @@ public class Proposta {
 	public Proposta(@NotBlank String documento, @NotBlank @Email String email, @NotBlank String nome,
 			@NotBlank String endereco, @Positive BigDecimal salario) {
 		super();
-		this.documento = documento;
+		this.documento = Criptografia.encode(documento);
 		this.email = email;
 		this.nome = nome;
 		this.endereco = endereco;

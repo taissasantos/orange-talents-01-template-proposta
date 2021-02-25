@@ -17,7 +17,7 @@ public class KeycloakSecurityConfig extends WebSecurityConfigurerAdapter {
 		authorize
 		.antMatchers(HttpMethod.POST,"/api/proposta/**").hasAuthority("SCOPE_proposta:write")
 		.antMatchers(HttpMethod.GET,"/api/proposta/**").hasAuthority("SCOPE_proposta:read")
-		.antMatchers(HttpMethod.GET,"/api/actuator/**").hasAuthority("SCOPE_proposta:read")
+		.antMatchers(HttpMethod.GET,"/actuator/**").permitAll()
 		.antMatchers(HttpMethod.POST,"/api/biometria/**").hasAuthority("SCOPE_proposta:write")
 		.antMatchers(HttpMethod.POST,"/api/bloqueio/**").hasAuthority("SCOPE_proposta:write")
 		.antMatchers(HttpMethod.POST,"/api/cartoes/**").hasAuthority("SCOPE_proposta:write")

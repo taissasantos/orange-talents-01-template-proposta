@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import br.com.br.proposta.request.AssociaCarteiraRequest;
 import br.com.br.proposta.request.AvisoViagemRequest;
 import br.com.br.proposta.request.DadosCardsFormRequest;
+import br.com.br.proposta.request.SolicitacaoBloqueio;
 import br.com.br.proposta.response.AssociaCarteiraResponse;
+import br.com.br.proposta.response.DadosCardsResponse;
+import br.com.br.proposta.response.ResultadoAvisoViagem;
+import br.com.br.proposta.response.StatusCartaoResponse;
 
 @FeignClient(url = "http://localhost:8888", name = "cartao")
 public interface CartaoWebRest {

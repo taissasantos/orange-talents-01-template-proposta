@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.br.proposta.controller.service.PropostaService;
 import br.com.br.proposta.model.Proposta;
+import br.com.br.proposta.model.enums.StatusAvaliacao;
 import br.com.br.proposta.repository.PropostaRepository;
 import br.com.br.proposta.request.NovaPropostaRequest;
+import br.com.br.proposta.request.StatusPropostaRequest;
+import br.com.br.proposta.response.SolicitacaoAnaliseFinanceira;
+import br.com.br.proposta.webservice.StatusPropostaWebRest;
 
 @RestController
 public class NovaPropostaController {
@@ -29,9 +32,9 @@ public class NovaPropostaController {
 	PropostaRepository repository;
 
 	@Autowired
-	PropostaService service;
+	StatusPropostaWebRest status;
 
-	//@RolesAllowed("user")
+
 	@PostMapping(value ="/api/proposta")
 	public ResponseEntity<?>novaProposta(@RequestBody @Valid NovaPropostaRequest request, 
 			UriComponentsBuilder uri){
@@ -46,25 +49,30 @@ public class NovaPropostaController {
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
 		} 
 
-		/*
-		 * if(proposta.getStatus() == StatusAvaliacao.NAO_ELEGIVEL ) {
-		 * logger.error("Documento possui restrição", proposta.getDocumento()); return
-		 * ResponseEntity.badRequest().body("Documento com restrição"); }
-		 */
+		StatusPropostaRequest obj = new StatusPropostaRequest(proposta);
 
+		try {
+			logger.info("Procurando numero de cartão, para a proposta solicitada");
+			SolicitacaoAnaliseFinanceira resultadoAnalise = status.buscaStatus(obj);
+			StatusAvaliacao propostaStatus = resultadoAnalise.getResultadoSolicitacao().toPropostaStatus();
+			proposta.setStatus(propostaStatus);
 
-		else {
-			proposta = service.validaProposta(request);
+			logger.info("Status recebido e salvo com sucesso", proposta.getStatus());
 
 			repository.save(proposta);
-
 			logger.info("Proposta sem restrições salva na base de dados", proposta);
 
 			URI location = uri.path("/api/proposta/{id}")
 					.buildAndExpand(proposta.getId()).toUri();
 
-			return ResponseEntity.created(location).build();
+			return ResponseEntity.status(HttpStatus.CREATED).body(location);
+
+		} catch (Exception e) {
+			logger.error("Número de cartão não encontrado");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cartão não encontrado");
 		}
+
+
 
 
 	}

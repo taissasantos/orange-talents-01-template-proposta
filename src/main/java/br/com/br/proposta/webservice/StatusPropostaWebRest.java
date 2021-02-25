@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import br.com.br.proposta.request.StatusPropostaRequest;
+import br.com.br.proposta.response.SolicitacaoAnaliseFinanceira;
 
 @FeignClient(url = "http://localhost:9999", name = "status")
 public interface StatusPropostaWebRest {

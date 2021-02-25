@@ -12,11 +12,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import br.com.br.proposta.model.Proposta;
-import br.com.br.proposta.model.StatusAvaliacao;
+import br.com.br.proposta.model.enums.StatusAvaliacao;
 import br.com.br.proposta.repository.PropostaRepository;
 import br.com.br.proposta.request.DadosCardsFormRequest;
+import br.com.br.proposta.response.DadosCardsResponse;
 import br.com.br.proposta.webservice.CartaoWebRest;
-import br.com.br.proposta.webservice.DadosCardsResponse;
 import feign.FeignException;
 
 @Component

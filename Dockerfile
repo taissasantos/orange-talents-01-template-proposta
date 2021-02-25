@@ -1,6 +1,4 @@
-FROM openjdk:15-jdk-alpine
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
+FROM openjdk:11.0.7-jre-slim-buster
 ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-Xmx512m","-jar","/app.jar"]
+COPY ${JAR_FILE} proposta.jar
+ENTRYPOINT ["java", "-jar","/proposta.jar"]

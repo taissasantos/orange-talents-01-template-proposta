@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AssociaCarteiraRequest {
 	
-	@JsonProperty
+	
     private String email;
-	@JsonProperty
+	
     private String carteira;
 
 	public AssociaCarteiraRequest(CarteiraRequest request) {

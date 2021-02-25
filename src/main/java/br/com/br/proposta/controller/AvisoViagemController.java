@@ -5,7 +5,6 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.br.proposta.model.AvisoViagem;
 import br.com.br.proposta.model.Cards;
 import br.com.br.proposta.request.AvisoViagemRequest;
+import br.com.br.proposta.response.ResultadoAvisoViagem;
 import br.com.br.proposta.webservice.CartaoWebRest;
-import br.com.br.proposta.webservice.ResultadoAvisoViagem;
-import br.com.br.proposta.webservice.ResultadoViagemEnum;
 
 @RestController
 public class AvisoViagemController {
 
-	private final Logger logger = LoggerFactory.getLogger(CartaoController.class);
+	private final Logger logger = LoggerFactory.getLogger(AvisoViagemController.class);
 
 	@PersistenceContext
 	EntityManager manager;
@@ -39,22 +37,28 @@ public class AvisoViagemController {
 	@Transactional
 	public ResponseEntity<?> avisoViagem(@PathVariable("id") Long id, @RequestBody @Valid AvisoViagemRequest request,
 			HttpServletRequest client ){
-		Cards cartao = manager.find(Cards.class, id);
 		
+		Cards cartao = manager.find(Cards.class, id);
+		logger.info("Verificando dados do cartão", id);
 		if (cartao == null) {
 			logger.error("Erro, cartão informado não existe na base de dados", id);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Dados do cartão inconsistentes");
 		}
 
 		try {
-
+			logger.info("Recebendo solicitação de aviso para viagem", id);
 			ResultadoAvisoViagem resultado = cartaoWebRest.avisaViagem(cartao.getIdentificadorCartao(), request);
+			
 			if(resultado.estaCriado()) {
 				AvisoViagem viagem = request.toModel(client);
+				logger.info("Salvando dados da viagem" , id);
 				manager.persist(viagem);
-
+				
+				logger.info("Adicionando aviso de viagem, na tabela de cartões", id);
 				cartao.addNovaViagem(viagem);
 				manager.persist(cartao);
+				
+				logger.info("Operação concluída, aviso de viagem regristrado", id);
 			}
 
 		} catch (Exception e) {

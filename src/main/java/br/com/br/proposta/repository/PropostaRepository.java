@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.com.br.proposta.model.Proposta;
-import br.com.br.proposta.model.StatusAvaliacao;
+import br.com.br.proposta.model.enums.StatusAvaliacao;
 
 public interface PropostaRepository extends JpaRepository<Proposta, Long> {
 	

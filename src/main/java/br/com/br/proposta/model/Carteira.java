@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import br.com.br.proposta.model.enums.NomeCarteiraEnum;
+
 @Entity
 public class Carteira {
 
